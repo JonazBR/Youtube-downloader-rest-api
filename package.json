@@ -1,0 +1,26 @@
+{
+  "name": "youtube-dl-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bent": "^7.3.12",
+    "ffmetadata": "^1.7.0",
+    "fs-extra": "^10.0.0",
+    "node-id3": "^0.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonazBR/Youtube-downloader-rest-api.git"
+  },
+  "author": "JonazBR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JonazBR/Youtube-downloader-rest-api/issues"
+  },
+  "homepage": "https://github.com/JonazBR/Youtube-downloader-rest-api#readme"
+}
