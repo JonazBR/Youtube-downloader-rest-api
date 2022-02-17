@@ -6,12 +6,9 @@ const {
 const ytdl = require('ytdl-core')
 const fs = require('fs-extra')
 const crypto = require('crypto')
-const path = require('path')
 const NodeID3 = require('node-id3')
-var {write} = require("ffmetadata");
 
-const axios = require('axios')
-const bent = require('bent')
+
 /*** modules ***/
 
 
@@ -25,17 +22,23 @@ const port = process.env.port || 8080
 const {
   StreamToBuffer,
   temp,
-  getBuffer
+  getBuffer,
+  deleteAudio
 } = require('./code/functions')
 /*** Functions ***/
 
+
+
+const dir = id => {return `./temp/${id}.mp3`}
+
 app.get('/file', async(req, res) => {
     const fileId = req.query.id
+    const filename = req.query.filename
 
-    if(fs.existsSync()) {
-      res.status(200)
-      .attachment(fileId)
-      .send('file ID')
+    if(fs.existsSync(dir(fileId))) {
+    	res.setHeader('Content-Type', 'audio/mp3');
+	    res.setHeader("Content-Disposition", 'attachment;\ filename='+filename)
+      res.send(await fs.readFile(dir(fileId, 'base64')))
 
     } else {
       return res.send('file not found')
@@ -45,6 +48,8 @@ app.get('/file', async(req, res) => {
 
 app.get('/play' , async(req, res) => {
   const id = crypto.randomBytes(10).toString('hex')
+  console.log('request')
+  let host = req.get('host')
   //const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   let infos = await search(req.query.music)
     const {
@@ -54,7 +59,6 @@ app.get('/play' , async(req, res) => {
     thumbnail,
     } =  infos.videos[0]
 
-
   let dl_stream = await ytdl(url, {
       filter: "audioonly",
       fmt: "mp3",
@@ -63,46 +67,35 @@ app.get('/play' , async(req, res) => {
  
   let bfstream = await StreamToBuffer(dl_stream)
 
-  var data = {
-    artist: "Me",
-  };
-  ffmetadata.write(dl_stream, data, function(err) {
-    if (err) console.error("Error writing metadata", err);
-    else console.log("Data written");
-  });
-  await fs.writeFile(temp(id), bfstream, 'base64')
+  await fs.writeFile(temp(id), bfstream, 'base64').then(async() => {
+    res.status(200).json({
+      status: 200,
+      dl_url: `${host}/file?id=${id}&filename=${encodeURIComponent(title+'.mp3').replace('_', '')}`,
+      expire: 'in 6 minutes'
+    })
+    await deleteAudio(temp(id), 6)
+  })
+  console.log(res.statusCode)
   const tags = 
   {
     title: title,
     artist: "insta: @jonaz_dev",
     album: title,
-    APIC: await bent('buffer')(thumbnail),
+    APIC: await getBuffer(thumbnail),
     TRCK: "27"
   }
 
  
-let bff = NodeID3.update(tags, bfstream)
-await fs.writeFile('./edit.mp3', bff)
+//let bff = NodeID3.update(tags, bfstream)
+//await fs.writeFile('./edit.mp3', bff)
 
-  let bf2 = await fs.readFileSync(temp(id))
+  //let bf2 = await fs.readFileSync(temp(id))
 
-  console.log(bf2)
+ // console.log(bf2)
 
-    /*
-let bff = NodeID3.update(tags, bf2)
-await fs.writeFile(temp(id), bff, 'base64').then(() => {
-  res.status(200).json({status: 200})
-})
-
-res.status(200).json({
-  udl: temp(id)
-})
- */
 
 
 })
-
-
 
 
 app.listen(port, () => {
