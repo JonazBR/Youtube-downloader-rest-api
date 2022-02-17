@@ -1,8 +1,28 @@
+
 {
-  "name": "youtube-dl-api",
-  "version": "1.0.0",
-  "description": "",
+  "name": "jonazbot-api",
+  "version": "1.1.0",
+  "description": "api para bots de whatsapp e outras aplica��es // api for whatsapp bots and others application",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonas33235/JonazBOT-API-BETA.git"
+  },
+  "keywords": [
+    "simple",
+    "api",
+    "rest",
+    "api"
+  ],
+  "author": "Jonaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jonas33235/JonazBOT-API-BETA.git"
+  },
   "dependencies": {
     "axios": "^0.26.0",
     "express": "^4.17.2",
@@ -10,19 +30,7 @@
     "node-id3": "^0.2.3",
     "yt-search": "^2.10.3",
     "ytdl-core": "^4.10.1"
+  
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JonazBR/Youtube-downloader-rest-api.git"
-  },
-  "author": "JonazBR",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/JonazBR/Youtube-downloader-rest-api/issues"
-  },
-  "homepage": "https://github.com/JonazBR/Youtube-downloader-rest-api#readme"
+  "homepage": "https://github.com/Jonas33235/JonazBOT-API-BETA#readme"
 }
