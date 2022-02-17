@@ -23,11 +23,8 @@
     "url": "https://github.com/Jonas33235/JonazBOT-API-BETA.git"
   },
   "dependencies": {
-    "axios": "^0.26.0",
-    "express": "^4.17.2",
-    "fs-extra": "^10.0.0",
-    "node-id3": "^0.2.3",
-    "yt-search": "^2.10.3"
+    "express": "^4.17.2"
+
  
     
 
