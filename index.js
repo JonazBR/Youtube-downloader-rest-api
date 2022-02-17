@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 8080 || 5000 || 3000
 const app = express()
 
 
-app.get('/db', async (req, res) => {
+app.get('/', async (req, res) => {
 	res.send('oi')
 })
 
